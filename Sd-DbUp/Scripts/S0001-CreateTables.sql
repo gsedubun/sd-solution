@@ -1,12 +1,17 @@
-﻿create table SalesPerson(sales_id int PRIMARY KEY IDENTITY(1,1) NOT NULL, full_name varchar(150) NOT NULL);
+﻿create table SalesPerson(SalesPersonId int PRIMARY KEY IDENTITY(1,1) NOT NULL, FullName varchar(150) NOT NULL);
 
-create table District(district_id int PRIMARY KEY IDENTITY(1,1) NOT NULL, district_name varchar(150) NOT NULL, 
-	primary_sales_id int NOT NULL,
-	Constraint FK_District_SALES FOREIGN KEY (primary_sales_id) REFERENCES SalesPerson(sales_id)
+create table District(DistrictId int PRIMARY KEY IDENTITY(1,1) NOT NULL, DistrictName varchar(150) NOT NULL, 
+	PrimarySalesId int NOT NULL,
+	Constraint FK_District_SALES FOREIGN KEY (PrimarySalesId) REFERENCES SalesPerson(SalesPersonId)
 	
 	);
-create table SecondarySalesPerson(sales_id int NOT NULL,district_id int NOT NULL,
-	Constraint PK_SecondarySalesPerson PRIMARY KEY (sales_id,district_id),
-	Constraint FK_SecondarySalesPerson_SALESPERSON FOREIGN KEY (sales_id) REFERENCES SalesPerson(sales_id),
-	Constraint FK_SecondarySalesPerson_DISTRICT FOREIGN KEY (district_id) REFERENCES District(district_id)
+
+create table Store(StoreId int PRIMARY KEY IDENTITY(1,1) NOT NULL, StoreName varchar(150) NOT NULL, DistrictId int NOT NULL
+	CONSTRAINT FK_STORE_DISTRICT FOREIGN KEY (DistrictId) REFERENCES District(DistrictId)
+	);
+
+create table SecondarySalesPerson(SalesPersonId int NOT NULL,DistrictId int NOT NULL,
+	Constraint PK_SecondarySalesPerson PRIMARY KEY (SalesPersonId,DistrictId),
+	Constraint FK_SecondarySalesPerson_SALESPERSON FOREIGN KEY (SalesPersonId) REFERENCES SalesPerson(SalesPersonId),
+	Constraint FK_SecondarySalesPerson_DISTRICT FOREIGN KEY (DistrictId) REFERENCES District(DistrictId)
 	);
