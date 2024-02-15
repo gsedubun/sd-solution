@@ -10,16 +10,16 @@ var config = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
-var connectionString =
-    config.GetConnectionString("DefaultConnection");
+var salesConnectionString =
+    config.GetConnectionString("SalesConnection");
 
 // Ensure database is created
-EnsureDatabase.For.SqlDatabase(connectionString);
+EnsureDatabase.For.SqlDatabase(salesConnectionString);
 
 var upgrader =
     DbUp.DeployChanges.To
-        .SqlDatabase(connectionString)
-        .WithScriptsFromFileSystem("Scripts")
+        .SqlDatabase(salesConnectionString)
+        .WithScriptsFromFileSystem("Sales_Scripts")
         .LogToConsole()
         .Build();
 
@@ -32,7 +32,36 @@ if (!result.Successful)
     return -1;
 }
 Console.ForegroundColor = ConsoleColor.Green;
-Console.WriteLine("Success!");
+Console.WriteLine("Sales Database Upgrade Success!");
 Console.ResetColor();
-Console.ReadKey();
+
+
+
+
+
+var storesConnectionString =
+    config.GetConnectionString("StoresConnection");
+
+// Ensure database is created
+EnsureDatabase.For.SqlDatabase(storesConnectionString);
+
+var storesUpgrader =
+    DbUp.DeployChanges.To
+        .SqlDatabase(storesConnectionString)
+        .WithScriptsFromFileSystem("Stores_Scripts")
+        .LogToConsole()
+        .Build();
+
+var resultStores = storesUpgrader.PerformUpgrade();
+if (!result.Successful)
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine(result.Error);
+    Console.ResetColor();
+    return -1;
+}
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("Stores Database Upgrade Success!");
+Console.ResetColor();
+
 return 0;

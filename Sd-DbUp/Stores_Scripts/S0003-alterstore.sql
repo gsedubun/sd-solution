@@ -1,0 +1,1 @@
+﻿alter table Store add DistrictName varchar(150) not null default '';

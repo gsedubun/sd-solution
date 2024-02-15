@@ -9,9 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Scripts\S0001-CreateTables.sql" />
-    <None Remove="Scripts\S0002-InitData.sql" />
-    <None Remove="Scripts\S0003-UniqColumn.sql" />
+    <None Remove="Sales_Scripts\S0001-CreateTables.sql" />
+    <None Remove="Sales_Scripts\S0002-InitData.sql" />
+    <None Remove="Sales_Scripts\S0003-UniqColumn.sql" />
+    <None Remove="Stores_Scripts\S0001-CreateTables.sql" />
+    <None Remove="Stores_Scripts\S0002-InitData.sql" />
+    <None Remove="Stores_Scripts\S0003-alterstore.sql" />
   </ItemGroup>
 
 
@@ -28,14 +31,23 @@
 	  <EmbeddedResource Include="appsettings.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </EmbeddedResource>
-	  <EmbeddedResource Include="Scripts\S0001-CreateTables.sql">
+	  <EmbeddedResource Include="Sales_Scripts\S0001-CreateTables.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\S0002-InitData.sql">
+    <EmbeddedResource Include="Sales_Scripts\S0002-InitData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-	  <EmbeddedResource Include="Scripts\S0003-UniqColumn.sql">
+	  <EmbeddedResource Include="Sales_Scripts\S0003-UniqColumn.sql">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="Stores_Scripts\S0001-CreateTables.sql">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="Stores_Scripts\S0002-InitData.sql">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="Stores_Scripts\S0003-alterstore.sql">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </EmbeddedResource>
   </ItemGroup>
 
