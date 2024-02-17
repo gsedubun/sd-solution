@@ -15,8 +15,7 @@
                     <small *ngIf="storeForm.get('storeName')?.errors?.['required'] && (storeForm.get('storeName')?.touched)" ngClass="text-danger">Name is required.</small>
                 </div>
                 <div class="form-group">
-                    <label>District </label>
-                    <input type="text" readonly class="form-control" value="{{district?.districtName}}"/>
+                    <input type="hidden" readonly class="form-control" value="{{district?.districtName}}"/>
                 </div>
 
                 <div class="form-group">
