@@ -24,7 +24,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { StoreComponent } from './store/store.component';
 import { ToastModule } from 'primeng/toast';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -42,7 +41,6 @@ import { CommonModule } from '@angular/common';
         ReactiveFormsModule,
         TableModule,
         HttpClientModule,
-        HttpClientTestingModule,
         InputTextModule,
         DialogModule,
         ToolbarModule,

@@ -1,4 +1,4 @@
-import { Component,  Input } from '@angular/core';
+import { Component,  Input, OnInit } from '@angular/core';
 import { IDistrict, ISalesPerson } from '../domain/models';
 import { SalespersonService } from '../services/salesperson.service';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
@@ -9,7 +9,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   templateUrl: './sales-person.component.html',
   styleUrls: ['./sales-person.component.css']
 })
-export class SalesPersonComponent {
+export class SalesPersonComponent implements OnInit {
 
   salesPersons: ISalesPerson[] = [];
   availableSalesPersons: ISalesPerson[] = [];
@@ -30,15 +30,17 @@ export class SalesPersonComponent {
      private fb: FormBuilder,
      private msgSvc: MessageService,
      private confirmSvc: ConfirmationService) { 
+    
+
+  }
+  ngOnInit(): void {
     this.salesPersonForm= this.fb.group({
       salesPersonId:0,
       districtId: 0,
       salesType:['', Validators.required],
     });
-
   }
   onSubmit(){
-    console.log(this.salesPersonForm.value);
     this.salesPersonsvc.addSalesPersonToDistrict(this.salesPersonForm.value)
       .subscribe((data: ISalesPerson) => {
         this.msgSvc.add({severity:'info', summary:'Confirmed', detail:'Record added'});

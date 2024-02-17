@@ -77,7 +77,7 @@ describe('StoreComponent', () => {
 
     component.showDialog();
     const districtIdElement = fixture.debugElement.query(
-      By.css('[name="districtId"]')
+      By.css('[ng-reflect-name="districtId"], input[value="1"]')
     );
 
     expect(component.dialogVisible).toBe(true);
@@ -109,8 +109,6 @@ describe('StoreComponent', () => {
     expect(component.getStoresForDistrict).toHaveBeenCalled(); // Make sure the getStoresForDistrict is called
     expect(component.dialogVisible).toBe(false);
     expect(component.storeForm.value).toEqual({ storeName: null, districtId: null }); // form is reset
-    //expect(component.storeForm.reset).toHaveBeenCalledBefore( component.getStoresForDistrict);
-    //expect(component.getStoresForDistrict).toHaveBeenCalled(); // Make sure the getStoresForDistrict is called
   });
 
 });

@@ -36,7 +36,6 @@ export class DistrictComponent implements OnInit {
   }
   LoadDistricts(){
     this.districtService.getDistricts().subscribe((data: IDistrict[]) => {
-      console.log(data);
       this.allDistricts = data;
     });
   }
@@ -56,9 +55,7 @@ export class DistrictComponent implements OnInit {
     });
   }
 
-  getStore(district: IDistrict){
-    console.log(district);
-  }
+ 
 
   showDialog(){
     console.log('show dialog');

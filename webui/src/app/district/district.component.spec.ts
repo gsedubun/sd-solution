@@ -7,6 +7,7 @@ import { SalespersonService } from '../services/salesperson.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 import { IDistrict } from '../domain/models';
+import { By } from '@angular/platform-browser';
 
 describe('DistrictComponent', () => {
   let component: DistrictComponent;
@@ -59,8 +60,12 @@ describe('DistrictComponent', () => {
     districtServiceMock.getDistricts.mockReturnValue(of(mockDistricts));
 
     component.ngOnInit();
+    const districtElement = fixture.debugElement.query(
+      By.css('h4[ng-reflect-ng-class="District 1"]')
+    );
 
     expect(component.allDistricts).toEqual(mockDistricts);
+    expect(districtServiceMock.getDistricts).toHaveBeenCalled();
   });
 
 });

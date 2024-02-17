@@ -10,6 +10,15 @@ interface IDistrict{
     salesType: string;
     districtId: number;
   }
+  interface IAvailableSalesPerson{
+    salesPersonId: number;
+    fullName: string;
+  }
+  interface IAddSalesPerson{
+    salesPersonId: number;
+    salesType: string;
+    districtId: number;
+  }
   interface ISecondarySalesPerson{
     districtId: number;
     salesPersonId: number;
@@ -21,5 +30,5 @@ interface IDistrict{
     districtId: number;
     districtName: string;
 }
-  export { IDistrict , ISalesPerson , ISecondarySalesPerson, IStore};
+  export { IDistrict , ISalesPerson ,IAddSalesPerson,IAvailableSalesPerson, ISecondarySalesPerson, IStore};
   
