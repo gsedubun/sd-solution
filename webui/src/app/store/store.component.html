@@ -1,0 +1,59 @@
+<div class="mt-2">
+
+    <p-card header="Stores">
+        <ng-template pTemplate="header">
+
+        </ng-template>
+        <button class="btn btn-sm btn-primary" (click)="showDialog()" [disabled]="!district">Add </button>
+
+        <p-dialog header="Add District" [(visible)]="dialogVisible" [modal]="true"
+            [style]="{width: '50vw', height: '15vw'}">
+            <form [formGroup]="storeForm" (ngSubmit)="onSubmit()" class="p-fluid">
+                <div class="form-group">
+                    <label> Name</label>
+                    <input formControlName="storeName" type="text" class="form-control" placeholder="District Name" />
+                    <small *ngIf="storeForm.get('storeName')?.errors?.['required'] && 
+            (storeForm.get('storeName')?.touched)" ngClass="text-danger">Name is required.</small>
+                </div>
+                <div class="form-group">
+                    <label>District </label>
+                    <input type="text" class="form-control" 
+                        placeholder="District Name" />
+                </div>
+
+                <div class="form-group">
+                    <input [readOnly]="true" type="hidden" readonly formControlName="districtId" class="form-control"
+                        placeholder="Phone Number">
+                </div>
+                <div class="form-group">
+                    <button [disabled]="!storeForm.valid" type="submit" class="btn btn-primary">
+                        Save
+                    </button>
+
+                </div>
+
+            </form>
+
+        </p-dialog>
+
+        <p-table [value]="stores" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Store Name</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-store>
+                <tr>
+                    <td>{{ store.storeName }}</td>
+                    <td>
+
+                        <button class="btn btn-sm btn-danger" (click)="confirmDelete($event, store)">Remove</button>
+                    </td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </p-card>
+</div>

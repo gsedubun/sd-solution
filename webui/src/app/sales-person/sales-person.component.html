@@ -1,0 +1,71 @@
+<div class="mt-2">
+
+    <p-card header="Sales Persons">
+        <ng-template pTemplate="header">
+        </ng-template>
+        <button class="btn btn-sm btn-primary" (click)="showDialog('Add')" [disabled]="!district">Add </button>
+
+        <p-dialog header="{{formMode}} Sales Person" [(visible)]="dialogVisible" [modal]="true"
+            [style]="{width: '50vw', height: '50vw'}">
+            <form [formGroup]="salesPersonForm" (ngSubmit)="onSubmit()" class="p-fluid">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <p-dropdown formControlName="salesPersonId" [options]="availableSalesPersons" optionLabel="fullName"
+                        optionValue="salesPersonId"></p-dropdown>
+                    <small *ngIf="salesPersonForm.get('fullName')?.errors?.['required'] && 
+                (salesPersonForm.get('fullName')?.touched)" ngClass="text-danger">Full name is required.</small>
+                </div>
+                <div class="form-group">
+                    <label>Sales Type</label>
+                    <select formControlName="salesType" class="form-control" placeholder="Sales Type">
+                        <option value="Primary">Primary</option>
+                        <option value="Secondary">Secondary</option>
+                    </select>
+                    <small *ngIf="salesPersonForm.get('salesType')?.errors?.['required'] && 
+                (salesPersonForm.get('salesType')?.touched)" ngClass="text-danger">Sales Type is required.</small>
+                </div>
+                <div class="form-group">
+                    <input type="hidden"  formControlName="districtId" >
+                </div>
+                <div class="form-group">
+                    <button [disabled]="!salesPersonForm.valid" type="submit" class="btn btn-primary">
+                        Save
+                    </button>
+
+                </div>
+
+            </form>
+
+        </p-dialog>
+        <p-toast></p-toast>
+        <p-confirmDialog></p-confirmDialog>
+
+        <p-table [value]="salesPersons" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-salesP>
+                <tr>
+                    <td>{{ salesP.fullName }}</td>
+                    <td>{{ salesP.salesType }}</td>
+                    <td>
+                        &nbsp;
+                        <div *ngIf="salesP.salesType=='Secondary'">
+
+                            <button class="btn btn-sm btn-danger"
+                                (click)="confirmDelete($event, salesP)">Remove</button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+
+    </p-card>
+
+</div>

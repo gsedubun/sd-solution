@@ -1,0 +1,69 @@
+<div class="row">
+
+    <div class="col-md-3">
+      <p-card header="District">
+  
+        <!-- <p-button class="p-button-success  p-button-sm" label="New District"></p-button> -->
+        <button class="btn btn-primary" (click)="showDialog()">New District</button>
+
+        <p-dialog header="Add District" [(visible)]="dialogVisible" [modal]="true" [style]="{width: '50vw', height: '15vw'}">
+            <form 
+                [formGroup]="districtForm"
+                (ngSubmit)="onSubmit()"
+                class="p-fluid">
+            <div class="form-group">
+                <label> Name</label>
+                <input formControlName="districtName" type="text" class="form-control" placeholder="District Name"/>
+                <small *ngIf="districtForm.get('districtName')?.errors?.['required'] && 
+                (districtForm.get('districtName')?.touched)" ngClass="text-danger">Name is required.</small>
+            </div>
+            <div class="form-group">
+                <label>Primary Sales</label>
+                <p-dropdown formControlName="primarySalesId" [options]="salesPersons" optionLabel="fullName" optionValue="salesPersonId"></p-dropdown>
+                    <small *ngIf="districtForm.get('primarySalesId')?.errors?.['required'] && 
+                    (districtForm.get('primarySalesId')?.touched)" ngClass="text-danger">Primary Sales is required.</small>
+            </div>
+           
+            <div class="form-group">
+                <input type="hidden"      formControlName="districtId" >
+            </div>
+            <div class="form-group">
+                <button [disabled]="!districtForm.valid"
+                type="submit" 
+                class="btn btn-primary">
+                Save
+            </button>
+    
+            </div>
+            
+            </form>
+            
+        </p-dialog>
+
+        <p-dataView #dv [value]="allDistricts" >
+          <ng-template let-district pTemplate="listItem">
+              <div class="card d-flex justify-content-between">
+  
+                <div  (click)="Detail(district)" [ngClass]="{'selected-district':selectedDistrict==district,'p-2 m-2 clickable ':true}" >
+                  <h4>{{district.districtName}} </h4>
+                    <span *ngIf="selectedDistrict==district" class="caret"></span>
+                </div>
+                <!-- <button class="btn btn-sm btn-secondary">Edit District</button> -->
+              </div>
+              <p-divider></p-divider>
+             
+  
+          </ng-template>
+  
+        </p-dataView>
+      </p-card>
+  
+    </div>
+  
+    <div class="col-md-9">
+      <app-sales-person  [district]="selectedDistrict" ></app-sales-person>
+      <app-store [district]="selectedDistrict"></app-store>
+    </div>
+  
+  </div>
+  
