@@ -6,7 +6,7 @@
         <!-- <p-button class="p-button-success  p-button-sm" label="New District"></p-button> -->
         <button class="btn btn-primary" (click)="showDialog()">New District</button>
 
-        <p-dialog header="Add District" [(visible)]="dialogVisible" [modal]="true" [style]="{width: '50vw', height: '15vw'}">
+        <p-dialog header="Add District" [(visible)]="dialogVisible" [modal]="true" [style]="{width: '50vw'}" [resizable]="true">
             <form 
                 [formGroup]="districtForm"
                 (ngSubmit)="onSubmit()"
