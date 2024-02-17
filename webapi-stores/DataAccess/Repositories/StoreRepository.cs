@@ -1,6 +1,7 @@
 using Dapper;
 using WebapiStores.DataAccess.Interfaces;
 using WebapiStores.DataAccess.Models;
+using WebapiStores.Providers;
 
 namespace WebapiStores.DataAccess.Repositories;
 public class StoreRepository : IStoreRepository
@@ -15,7 +16,7 @@ public class StoreRepository : IStoreRepository
     public void AddStore(Store store)
     {
         using var connection =  dbConnectionProvider.CreateConnection();
-        int newid = connection.ExecuteScalar<int>(@"INSERT INTO Store (StoreId,StoreName,DistrictId,DistrictName) VALUES (@StoreId, @StoreName, @DistrictId,@DistrictName); 
+        int newid = connection.ExecuteScalar<int>(@"INSERT INTO Store (StoreName,DistrictId,DistrictName) VALUES ( @StoreName, @DistrictId,@DistrictName); 
             SELECT SCOPE_IDENTITY();", store);
         store.StoreId = newid;
     }
@@ -38,7 +39,7 @@ public class StoreRepository : IStoreRepository
         return connection.Query<Store>("SELECT StoreId,StoreName,DistrictId,DistrictName FROM Store").ToList();
     }
 
-    public IEnumerable<Store> GetStoresByDistrict(int districtId)
+    public IEnumerable<Store> GetStoresForDistrict(int districtId)
     {
         using var connection =  dbConnectionProvider.CreateConnection();
         return connection.Query<Store>("SELECT StoreId,StoreName,DistrictId,DistrictName FROM Store WHERE DistrictId = @districtId", new { districtId }).ToList();

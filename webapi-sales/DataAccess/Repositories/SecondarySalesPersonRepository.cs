@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using WebapiSales.DataAccess.Interfaces;
 using WebapiSales.DataAccess.Models;
+using WebapiSales.DataAccess.ViewModels;
 using WebapiSales.Providers;
 
 namespace WebapiSales.DataAccess.Repositories;
@@ -21,10 +22,15 @@ public class SecondarySalesPersonRepository : ISecondarySalesPersonRepository
         return secondarySalesPersons;
     }
 
-    public IEnumerable<SecondarySalesPerson> GetSecondarySalesPersonByDistrictId(int districtId)
+    public IEnumerable<SalesPersonViewModel> GetSecondarySalesPersonByDistrictId(int districtId)
     {
         using var connection = _dbConnectionProvider.CreateConnection();
-        var secondarySalesPerson = connection.Query<SecondarySalesPerson>("SELECT SalesPersonId,DistrictId FROM SecondarySalesPerson WHERE  DistrictId = @DistrictId", new {  DistrictId = districtId }).ToList();
+        var secondarySalesPerson = connection.Query<SalesPersonViewModel>(@"SELECT 
+                sp.SalesPersonId
+                ,DistrictId 
+                ,s.FullName
+                FROM SecondarySalesPerson sp 
+                join SalesPerson s on sp.SalesPersonId=s.SalesPersonId WHERE  sp.DistrictId = @DistrictId", new {  DistrictId = districtId });
         return secondarySalesPerson;
     }
 

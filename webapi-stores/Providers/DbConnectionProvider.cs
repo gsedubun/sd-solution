@@ -1,7 +1,7 @@
 using System.Data;
-using System.Net.Http;
 using Microsoft.Data.SqlClient;
 
+namespace WebapiStores.Providers;
 public sealed class DbConnectionProvider
  {
      private readonly string? _connectionString;

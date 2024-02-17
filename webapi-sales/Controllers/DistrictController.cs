@@ -18,17 +18,17 @@ public class DistrictController : ControllerBase
     }
 
     [HttpGet(Name = "GetDistricts")]
-    [ProducesResponseType(typeof(IEnumerable<District>), StatusCodes.Status200OK)]
-    public ActionResult<IEnumerable<District>> GetDistricts()
+    [ProducesResponseType(typeof(IEnumerable<DistrictViewModel>), StatusCodes.Status200OK)]
+    public ActionResult GetDistricts()
     {
         var districts = _districtRepository.GetDistricts();
         return Ok(districts);
     }
 
     [HttpGet("{districtId}", Name = "GetDistrict")]
-    [ProducesResponseType(typeof(District), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(DistrictViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<District> GetDistrict(int districtId)
+    public ActionResult GetDistrict(int districtId)
     {
         var district = _districtRepository.GetDistrict(districtId);
         if (district == null)
@@ -42,8 +42,6 @@ public class DistrictController : ControllerBase
     [ProducesResponseType(typeof(District), StatusCodes.Status201Created)]
     public ActionResult<District> AddDistrict(AddDistrict district)
     {
-        try
-        {
             var districtModel = new District()
             {
                 DistrictName = district.DistrictName,
@@ -51,12 +49,7 @@ public class DistrictController : ControllerBase
             };
             _districtRepository.AddDistrict(districtModel);
             return CreatedAtRoute("GetDistrict", new { districtId = districtModel.DistrictId }, districtModel);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e,"error");
-            return StatusCode(500, e.Message);
-        }
+       
         
     }
 
@@ -86,5 +79,13 @@ public class DistrictController : ControllerBase
         }
         _districtRepository.DeleteDistrict(districtId);
         return NoContent();
+    }
+
+    [HttpGet("{districtId}/AvailableSalesPersons", Name = "GetAvailableSalesPersonsForDistrict")]
+    [ProducesResponseType(typeof(IEnumerable<SalesPerson>), StatusCodes.Status200OK)]
+    public ActionResult GetAvailableSalesPersonsForDistrict(int districtId)
+    {
+        var salesPersons = _districtRepository.GetAvailableSalesPersonsForDistrict(districtId);
+        return Ok(salesPersons);
     }
 }

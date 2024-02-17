@@ -22,7 +22,15 @@ builder.Services.AddHttpClient("Store", c =>
 {
     c.BaseAddress = new Uri(salesApiHost);
 });
-
+var localhost = "dev-site";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: localhost,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+        });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,6 +48,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseExceptionHandler();
+
+app.UseCors(localhost);
+
 app.UseAuthorization();
 
 app.MapControllers();

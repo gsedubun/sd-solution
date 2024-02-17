@@ -19,10 +19,10 @@ public class StoreController: ControllerBase{
 
     }
     
-    [HttpGet( "GetStoresByDistrict/{districtId}", Name = "GetStoresByDistrict")]
-    public ActionResult<IEnumerable<Store>> GetStores(int districtId)
+    [HttpGet( "GetStoresForDistrict/{districtId}", Name = "GetStoresForDistrict")]
+    public ActionResult GetStoresForDistrict(int districtId)
     {
-        return Ok(_storeRepository.GetStoresByDistrict(districtId));
+        return Ok(_storeRepository.GetStoresForDistrict(districtId));
     }
     [HttpGet(Name = "GetStores")]
     public ActionResult<IEnumerable<Store>> GetStores()
@@ -49,7 +49,7 @@ public class StoreController: ControllerBase{
         var store = new Store
         {
             StoreName = addstore.StoreName,
-            DistrictId = addstore.DistrictId,
+            DistrictId = addstore.DistrictId,        
         };
         var getDistrict = await GetDistrict(store.DistrictId);// await _salesHttpClient.GetAsync("/district/" + store.DistrictId);
         if(getDistrict != null){
@@ -65,7 +65,7 @@ public class StoreController: ControllerBase{
     {
         var getDistrict = await _salesHttpClient.GetAsync("/district/" + districtId);
         var district = await getDistrict.Content.ReadFromJsonAsync<District>();
-        if(district != null)
+        if(getDistrict.IsSuccessStatusCode)
             return district;
 
         return null;

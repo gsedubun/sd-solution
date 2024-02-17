@@ -10,5 +10,5 @@ public interface IStoreRepository
     void UpdateStore(Store store);
     void DeleteStore(int storeId);
     bool StoreExists(int storeId);
-    IEnumerable<Store> GetStoresByDistrict(int districtId);
+    IEnumerable<Store> GetStoresForDistrict(int districtId);
 }

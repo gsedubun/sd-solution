@@ -1,5 +1,6 @@
 using WebapiStores.DataAccess.Interfaces;
 using WebapiStores.DataAccess.Repositories;
+using WebapiStores.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +20,22 @@ builder.Services.AddHttpClient("Sales", c =>
 {
     c.BaseAddress = new Uri(salesApiHost);
 });
+var localhost = "dev-site";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: localhost,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+        });
+});
 
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 
 var app = builder.Build();
 
@@ -34,6 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(localhost);
 
 app.UseAuthorization();
 

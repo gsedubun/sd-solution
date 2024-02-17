@@ -15,17 +15,19 @@ public class DistrictRepository : IDistrictRepository
         _dbConnectionProvider = dbConnectionProvider;
     }
 
-    public IEnumerable<District> GetDistricts()
+    public IEnumerable<DistrictViewModel> GetDistricts()
     {
         using var connection = _dbConnectionProvider.CreateConnection();
-        var districts = connection.Query<District>("SELECT DistrictId,DistrictName,PrimarySalesId FROM District").ToList();
+        var districts = connection.Query<DistrictViewModel>(@"SELECT DistrictId,DistrictName,PrimarySalesId,sp.FullName PrimarySalesFullName  
+                    FROM District d join SalesPerson sp on d.PrimarySalesId=sp.SalesPersonId ").ToList();
         return districts;
     }
 
-    public District? GetDistrict(int districtId)
+    public DistrictViewModel? GetDistrict(int districtId)
     {
         using var connection = _dbConnectionProvider.CreateConnection();
-        var district = connection.QueryFirstOrDefault<District>("SELECT DistrictId,DistrictName,PrimarySalesId FROM District WHERE DistrictId = @DistrictId", new { DistrictId = districtId });
+        var district = connection.QueryFirstOrDefault<DistrictViewModel>("SELECT DistrictId,DistrictName,PrimarySalesId,sp.FullName PrimarySalesFullName  " +
+                                                                         " FROM District d join SalesPerson sp on d.PrimarySalesId=sp.SalesPersonId WHERE DistrictId = @DistrictId", new { DistrictId = districtId });
         return district;
     }
 
@@ -55,5 +57,17 @@ public class DistrictRepository : IDistrictRepository
         using var connection = _dbConnectionProvider.CreateConnection();
         var district = connection.QueryFirstOrDefault<District>("SELECT DistrictId FROM District WHERE DistrictId = @DistrictId", new { DistrictId = districtId });
         return district != null;
+    }
+
+    public IEnumerable<SalesPerson> GetAvailableSalesPersonsForDistrict(int districtId)
+    {
+        string sql = @"select s.SalesPersonId, s.FullName, sp.DistrictId , d.DistrictName
+                from SalesPerson s
+                left join SecondarySalesPerson sp on s.SalesPersonId=sp.SalesPersonId and  sp.DistrictId=@districtid
+                left join District d on s.SalesPersonId=d.PrimarySalesId and d.DistrictId=@districtid
+                where sp.DistrictId is null and d.DistrictId is null";
+        using var connection = _dbConnectionProvider.CreateConnection();
+        var salesPersons = connection.Query<SalesPerson>(sql, new { districtid = districtId }).ToList();
+        return salesPersons;
     }
 }

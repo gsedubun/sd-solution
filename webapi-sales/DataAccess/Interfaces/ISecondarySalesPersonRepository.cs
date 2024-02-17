@@ -1,11 +1,12 @@
 ﻿using WebapiSales.DataAccess.Models;
+using WebapiSales.DataAccess.ViewModels;
 
 namespace WebapiSales.DataAccess.Interfaces;
 
 public interface ISecondarySalesPersonRepository
 {
     IEnumerable<SecondarySalesPerson> GetSecondarySalesPersons();
-    IEnumerable<SecondarySalesPerson> GetSecondarySalesPersonByDistrictId(int districtId);
+    IEnumerable<SalesPersonViewModel> GetSecondarySalesPersonByDistrictId(int districtId);
     void AddSecondarySalesPerson(SecondarySalesPerson secondarySalesPerson);
     void UpdateSecondarySalesPerson(SecondarySalesPerson secondarySalesPerson);
     void DeleteSecondarySalesPerson(int salesPersonId, int districtId);

@@ -5,11 +5,12 @@ namespace WebapiSales.DataAccess.Interfaces
 {
     public interface IDistrictRepository
     {
-        IEnumerable<District> GetDistricts();
-        District? GetDistrict(int districtId);
+        IEnumerable<DistrictViewModel> GetDistricts();
+        DistrictViewModel? GetDistrict(int districtId);
         void AddDistrict(District district);
         void UpdateDistrict(District district);
         void DeleteDistrict(int districtId);
         bool DistrictExists(int districtId);
+        IEnumerable<SalesPerson> GetAvailableSalesPersonsForDistrict(int districtId);
     }
 }
