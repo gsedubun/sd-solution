@@ -1,14 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { IDistrict } from '../domain/models';
+import { IAddDistrict, IDistrict, IEditDistrict } from '../domain/models';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DistrictService {
-  addDistrict(value: any) : Observable<IDistrict> {
+  updateDistrict(value: IEditDistrict) {
+    return this.http.put(this.districtUrl+'/district/'+value.districtId, value);
+  }
+  deleteDistrict(districtId: number) {
+    return this.http.delete(this.districtUrl+'/district/'+districtId);
+  }
+  addDistrict(value: IAddDistrict) : Observable<IDistrict> {
     return this.http.post<IDistrict>(this.districtUrl+'/district', value);
   }
   private readonly districtUrl: string = environment.districtUrl;

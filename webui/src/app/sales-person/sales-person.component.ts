@@ -1,5 +1,5 @@
 import { Component,  Input, OnInit } from '@angular/core';
-import { IDistrict, ISalesPerson } from '../domain/models';
+import { IAddSalesPerson, IAvailableSalesPerson, IDistrict, ISalesPerson } from '../domain/models';
 import { SalespersonService } from '../services/salesperson.service';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -12,12 +12,17 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class SalesPersonComponent implements OnInit {
 
   salesPersons: ISalesPerson[] = [];
-  availableSalesPersons: ISalesPerson[] = [];
+  availableSalesPersons: IAvailableSalesPerson[] = [];
   private _district: IDistrict;
   @Input('district') 
   set district(value: IDistrict){
     this._district = value;
+    if(value==undefined){
+      this.salesPersons=[];
+      return;
+    }
     this.getSalesPersons();
+    
   }
   get district(): IDistrict{
     return this._district;
@@ -42,7 +47,7 @@ export class SalesPersonComponent implements OnInit {
   }
   onSubmit(){
     this.salesPersonsvc.addSalesPersonToDistrict(this.salesPersonForm.value)
-      .subscribe((data: ISalesPerson) => {
+      .subscribe((data: IAddSalesPerson) => {
         this.msgSvc.add({severity:'info', summary:'Confirmed', detail:'Record added'});
         this.dialogVisible = false;
         this.salesPersonForm.reset();
@@ -71,13 +76,11 @@ export class SalesPersonComponent implements OnInit {
     this.salesPersonForm.patchValue({districtId: this._district.districtId});
     this.salesPersonForm.patchValue({district: this._district.districtName});
     this.formMode = header;
-    this.salesPersonsvc.getAvailableSalesPersons(this.district.districtId).subscribe((data: ISalesPerson[]) => {
+    this.salesPersonsvc.getAvailableSalesPersons(this.district.districtId).subscribe((data: IAvailableSalesPerson[]) => {
       this.availableSalesPersons = data;
     });
   }
-
   
-
   getSalesPersons(){
     if(this.district == null){
       return;

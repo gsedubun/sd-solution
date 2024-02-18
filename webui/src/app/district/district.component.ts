@@ -3,6 +3,7 @@ import { IDistrict, ISalesPerson } from '../domain/models';
 import { DistrictService } from '../services/district.service';
 import { SalespersonService } from '../services/salesperson.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-district',
@@ -15,17 +16,19 @@ export class DistrictComponent implements OnInit {
   salesPersons: ISalesPerson[] = [];
   dialogVisible: boolean;
   districtForm: FormGroup= {} as FormGroup;
+  formMode: string;
 
   constructor(private districtService: DistrictService,
      private salesPersonsvc: SalespersonService,
-     private fb: FormBuilder) { }
+     private fb: FormBuilder,
+     private confirmSvc: ConfirmationService) { }
 
   ngOnInit(): void {
 
     this.districtForm = this.fb.group({
       districtId: 0,
       districtName: ['',Validators.required],
-      primarySalesId: 0
+      primarySalesId: [0, Validators.required]
     });
     this.LoadDistricts();
 
@@ -40,10 +43,18 @@ export class DistrictComponent implements OnInit {
     });
   }
   onSubmit(){
-    console.log(this.districtForm.value);
+    if(this.formMode === 'Edit'){
+      this.districtService.updateDistrict(this.districtForm.value)
+      .subscribe(() => {
+        this.dialogVisible = false;
+        this.districtForm.reset();
+        this.LoadDistricts();
+        this.selectedDistrict = undefined;
+      });
+      return;
+    }
     this.districtService.addDistrict(this.districtForm.value)
       .subscribe((data: IDistrict) => {
-        this.allDistricts.push(data);
         this.dialogVisible = false;
         this.districtForm.reset();
         this.LoadDistricts();
@@ -55,10 +66,31 @@ export class DistrictComponent implements OnInit {
     });
   }
 
- 
+  deleteDistrict(district: IDistrict){
+    this.confirmSvc.confirm({
+      message: 'Are you sure you want to delete this district?',
+      accept: () => {
+        this.districtService.deleteDistrict(district.districtId)
+        .subscribe((data) => {
+          this.selectedDistrict = undefined;
+          this.LoadDistricts();
+        });
+      }
+    });
+    
+  }
+  showEdit(){
+    this.formMode = 'Edit';
 
+    this.dialogVisible = true;
+    this.districtForm.patchValue(this.selectedDistrict);
+    this.salesPersonsvc.getAvailableSalesPersons(this.selectedDistrict.districtId).subscribe((data: ISalesPerson[]) => {
+      this.salesPersons = data;
+    });
+
+  }
   showDialog(){
-    console.log('show dialog');
+    this.formMode = 'Add';
     this.dialogVisible = true;
     this.getSalesPersons();
   }

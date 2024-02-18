@@ -5,7 +5,7 @@ import { SalespersonService } from '../services/salesperson.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
-import { IDistrict, ISalesPerson } from '../domain/models';
+import { IAddSalesPerson, IAvailableSalesPerson, IDistrict, ISalesPerson } from '../domain/models';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
@@ -74,7 +74,7 @@ describe('SalesPersonComponent', () => {
   });
 
   it('should add salesperson on form submission', () => {
-    const mockSalesPerson : ISalesPerson = { salesPersonId: 1, districtId: 1, salesType: 'Type A', fullName: 'Sales 1'} ;
+    const mockSalesPerson : IAddSalesPerson = { salesPersonId: 1, salesType: 'Primary', districtId:  1} ;
     salesPersonServiceMock.addSalesPersonToDistrict.mockReturnValue(of(mockSalesPerson));
     component.ngOnInit();
 
@@ -104,7 +104,7 @@ describe('SalesPersonComponent', () => {
 
 
   it('should show dialog and load available salespersons', () => {
-    const mockAvailableSalesPersons = [
+    const mockAvailableSalesPersons:IAvailableSalesPerson[] = [
       { salesPersonId: 1, fullName: 'Sales Person 1' },
       { salesPersonId: 2, fullName: 'Sales Person 2' },
     ];

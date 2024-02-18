@@ -9,7 +9,7 @@ import { IAddSalesPerson, IAvailableSalesPerson, ISalesPerson } from '../domain/
 })
 export class SalespersonService {
   deleteSalesPersonDistrict(salesPerson:ISalesPerson) : Observable<ISalesPerson>{
-    return this.http.delete<ISalesPerson>(this.districtUrl + '/SalesPerson/DeleteSalesPersonDistrict',{ body: salesPerson });
+    return this.http.delete<ISalesPerson>(this.districtUrl + '/salesperson/DeleteSalesPersonDistrict',{ body: salesPerson });
   }
   getAvailableSalesPersons(districtId: number):Observable<IAvailableSalesPerson[]>  {
     return this.http.get<IAvailableSalesPerson[]>( this.districtUrl+ `/District/${districtId}/AvailableSalesPersons/`);
@@ -18,18 +18,18 @@ export class SalespersonService {
   constructor(private http: HttpClient) { }
 
   getSalespersonsForDistrict(districtId: number): Observable<ISalesPerson[]> {
-    return this.http.get<ISalesPerson[]>( this.districtUrl+ '/SalesPerson/GetForDistrict/' + districtId);
+    return this.http.get<ISalesPerson[]>( this.districtUrl+ '/salesperson/GetForDistrict/' + districtId);
   }
 
-  getSalesPersons(): Observable<ISalesPerson[]> {
-    return this.http.get<ISalesPerson[]>(this.districtUrl + '/SalesPerson');
+  getSalesPersons(): Observable<IAvailableSalesPerson[]> {
+    return this.http.get<IAvailableSalesPerson[]>(this.districtUrl + '/salesperson');
   }
 
   createSalesPerson(salesPerson: ISalesPerson): Observable<ISalesPerson> {
-    return this.http.post<ISalesPerson>(this.districtUrl + '/SalesPerson', salesPerson);
+    return this.http.post<ISalesPerson>(this.districtUrl + '/salesperson', salesPerson);
   }
 
-  addSalesPersonToDistrict(sales: IAddSalesPerson): Observable<ISalesPerson> {
-    return this.http.post<ISalesPerson>(this.districtUrl + `/SalesPerson/addSalesPersonToDistrict`, sales);
+  addSalesPersonToDistrict(sales: IAddSalesPerson): Observable<IAddSalesPerson> {
+    return this.http.post<IAddSalesPerson>(this.districtUrl + `/salesperson/addSalesPersonToDistrict`, sales);
   }
 }

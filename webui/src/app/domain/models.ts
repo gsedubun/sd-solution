@@ -2,13 +2,23 @@ interface IDistrict{
     districtId: number;
     districtName: string;
     primarySalesId: number;
-    primarySalesFullName: string;
+    primarySalesFullName?: string;
   }
+interface IAddDistrict{
+  districtName: string;
+  primarySalesId: number;
+}
+interface IEditDistrict{
+  districtId: number;
+  districtName: string;
+  primarySalesId: number;
+}
+
   interface ISalesPerson{
     salesPersonId: number;
     fullName: string;
     salesType: string;
-    districtId: number;
+    //districtId: number;
   }
   interface IAvailableSalesPerson{
     salesPersonId: number;
@@ -30,5 +40,5 @@ interface IDistrict{
     districtId: number;
     districtName: string;
 }
-  export { IDistrict , ISalesPerson ,IAddSalesPerson,IAvailableSalesPerson, ISecondarySalesPerson, IStore};
+  export { IDistrict,IAddDistrict ,IEditDistrict, ISalesPerson ,IAddSalesPerson,IAvailableSalesPerson, ISecondarySalesPerson, IStore};
   
