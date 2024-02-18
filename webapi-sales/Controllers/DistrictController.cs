@@ -9,12 +9,15 @@ namespace WebapiSales.Controllers;
 [Route("[controller]")]
 public class DistrictController : ControllerBase
 {
+    private readonly ISecondarySalesPersonRepository _secondarySalesRepository;
+
     private readonly IDistrictRepository _districtRepository;
     private readonly ILogger<DistrictController> _logger;
-    public DistrictController(IDistrictRepository districtRepository, ILogger<DistrictController> logger)
+    public DistrictController(IDistrictRepository districtRepository, ILogger<DistrictController> logger,ISecondarySalesPersonRepository secondarySalesRepository)
     {
         _districtRepository = districtRepository;
         _logger = logger;
+        _secondarySalesRepository = secondarySalesRepository;
     }
 
     [HttpGet(Name = "GetDistricts")]
@@ -67,6 +70,13 @@ public class DistrictController : ControllerBase
             PrimarySalesId = district.PrimarySalesId
         };
         _districtRepository.UpdateDistrict(districtModel);
+
+        //Delete secondary sales person if exists for the district
+        if (_secondarySalesRepository.SecondarySalesPersonExists(districtModel.PrimarySalesId, districtId))
+        {
+            _secondarySalesRepository.DeleteSecondarySalesPerson(districtModel.PrimarySalesId, districtId);
+        }
+
         return NoContent();
     }
 

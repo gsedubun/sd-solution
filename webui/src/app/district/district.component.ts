@@ -81,13 +81,14 @@ export class DistrictComponent implements OnInit {
   }
   showEdit(){
     this.formMode = 'Edit';
-
+    console.log(this.selectedDistrict);
     this.dialogVisible = true;
-    this.districtForm.patchValue(this.selectedDistrict);
-    this.salesPersonsvc.getAvailableSalesPersons(this.selectedDistrict.districtId).subscribe((data: ISalesPerson[]) => {
+    this.salesPersonsvc.getSalesPersons().subscribe((data: ISalesPerson[]) => {
       this.salesPersons = data;
     });
 
+    this.districtForm.patchValue(this.selectedDistrict);
+    
   }
   showDialog(){
     this.formMode = 'Add';

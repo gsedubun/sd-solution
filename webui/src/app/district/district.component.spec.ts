@@ -155,7 +155,8 @@ describe('DistrictComponent', () => {
     component.ngOnInit();
     const mockDistrict: IDistrict = { districtId: 1, districtName: 'District 1', primarySalesId: 1 , primarySalesFullName: 'Sales 1'};
     component.selectedDistrict=mockDistrict;
-
+    const mockAvailableSalesPersons = [{ salesPersonId: 1, fullName: 'Sales Person 1' }];
+    salesPersonServiceMock.getSalesPersons.mockReturnValue(of(mockAvailableSalesPersons));
     component.showEdit();
     expect(component.formMode).toBe('Edit');
   });

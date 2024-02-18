@@ -4,7 +4,7 @@ import { SalespersonService } from './salesperson.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from '../../environments/environment';
-import { ISalesPerson } from '../domain/models';
+import { IAddSalesPerson, ISalesPerson } from '../domain/models';
 
 describe('SalespersonService', () => {
   let service: SalespersonService;
@@ -88,6 +88,20 @@ describe('SalespersonService', () => {
 
       const request = httpMock.expectOne(`${environment.districtUrl}/salesperson/DeleteSalesPersonDistrict`);
       expect(request.request.method).toBe('DELETE');
+      request.flush(dummySalesPerson);
+    });
+  });
+
+  describe('addSalesPersonToDistrict', () => {
+    it('should return an Observable<ISalesPerson>', () => {
+      const dummySalesPerson = { salesPersonId: 1, districtId: 1, salesType: 'Primary'} as IAddSalesPerson;
+
+      service.addSalesPersonToDistrict(dummySalesPerson).subscribe(salesPerson => {
+        expect(salesPerson).toEqual(dummySalesPerson);
+      });
+
+      const request = httpMock.expectOne(`${environment.districtUrl}/salesperson/addSalesPersonToDistrict`);
+      expect(request.request.method).toBe('POST');
       request.flush(dummySalesPerson);
     });
   });
