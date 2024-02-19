@@ -40,7 +40,7 @@ export class SalesPersonComponent implements OnInit {
   }
   ngOnInit(): void {
     this.salesPersonForm= this.fb.group({
-      salesPersonId:0,
+      salesPersonId:[0, Validators.required],
       districtId: 0,
       salesType:['', Validators.required],
     });

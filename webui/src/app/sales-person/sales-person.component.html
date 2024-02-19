@@ -12,8 +12,8 @@
                     <label>Full Name</label>
                     <p-dropdown formControlName="salesPersonId" [options]="availableSalesPersons" optionLabel="fullName"
                         optionValue="salesPersonId"></p-dropdown>
-                    <small *ngIf="salesPersonForm.get('fullName')?.errors?.['required'] && 
-                (salesPersonForm.get('fullName')?.touched)" ngClass="text-danger">Full name is required.</small>
+                    <small *ngIf="salesPersonForm.get('salesPersonId')?.errors?.['required'] && 
+                (salesPersonForm.get('salesPersonId')?.touched)" ngClass="text-danger">Full name is required.</small>
                 </div>
                 <div class="form-group">
                     <label>Sales Type</label>
