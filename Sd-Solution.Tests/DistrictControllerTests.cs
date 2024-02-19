@@ -22,7 +22,7 @@ public class DistrictControllerTests
         _mockSalesPersonRepository = new Mock<ISalesPersonRepository>();
         _mockSecondarySalesPersonRepository = new Mock<ISecondarySalesPersonRepository>();
         _mockLogger = new Mock<ILogger<DistrictController>>();
-        _controller = new DistrictController(_mockDistrictRepository.Object, _mockLogger.Object);
+        _controller = new DistrictController(_mockDistrictRepository.Object, _mockLogger.Object,_mockSecondarySalesPersonRepository.Object);
     }
 
     [Fact]

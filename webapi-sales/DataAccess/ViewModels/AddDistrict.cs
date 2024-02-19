@@ -21,14 +21,26 @@ namespace WebapiSales.DataAccess.ViewModels
 
     public class AddSalesPerson
     {
+        public int? SalesPersonId { get; set; }
+
         public string FullName { get; set; }
-        public int DistrictId { get; set; }
-        public string SalesType { get; set; }
 
     }
+    /// <summary>
+    /// Add SalesPerson to District
+    /// </summary>
     public class AddSalesPersonToDistrictViewModel{
+        /// <summary>
+        /// SalesPerson Id
+        /// </summary>
         public int SalesPersonId { get; set; }
+        /// <summary>
+        /// District Id
+        /// </summary>
         public int DistrictId { get; set; }
+        /// <summary>
+        /// SalesType : Primary or Secondary
+        /// </summary>
         public string SalesType { get; set; } = "Secondary";
 
     }
@@ -46,9 +58,21 @@ namespace WebapiSales.DataAccess.ViewModels
         {
             
         }
+        /// <summary>
+        /// SalesPerson Id
+        /// </summary>
         public int SalesPersonId { get; set; }
+        /// <summary>
+        /// District Id
+        /// </summary>
         public int DistrictId { get; set; }
+        /// <summary>
+        /// SalesPerson FullName
+        /// </summary>
         public string FullName { get; set; }
+        /// <summary>
+        /// SalesType : Primary or Secondary
+        /// </summary>
         public  string SalesType { get; set; } = "Secondary";
     }
 

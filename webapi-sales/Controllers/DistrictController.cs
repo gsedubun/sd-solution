@@ -20,6 +20,10 @@ public class DistrictController : ControllerBase
         _secondarySalesRepository = secondarySalesRepository;
     }
 
+    /// <summary>
+    /// Get districts
+    /// </summary>
+    /// <returns></returns>
     [HttpGet(Name = "GetDistricts")]
     [ProducesResponseType(typeof(IEnumerable<DistrictViewModel>), StatusCodes.Status200OK)]
     public ActionResult GetDistricts()
@@ -28,6 +32,11 @@ public class DistrictController : ControllerBase
         return Ok(districts);
     }
 
+    /// <summary>
+    /// Get district
+    /// </summary>
+    /// <param name="districtId">district id</param>
+    /// <returns></returns>
     [HttpGet("{districtId}", Name = "GetDistrict")]
     [ProducesResponseType(typeof(DistrictViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,6 +50,11 @@ public class DistrictController : ControllerBase
         return Ok(district);
     }
 
+    /// <summary>
+    /// Add district
+    /// </summary>
+    /// <param name="district"></param>
+    /// <returns></returns>
     [HttpPost(Name = "AddDistrict")]
     [ProducesResponseType(typeof(District), StatusCodes.Status201Created)]
     public ActionResult<District> AddDistrict(AddDistrict district)
@@ -56,7 +70,15 @@ public class DistrictController : ControllerBase
         
     }
 
+    /// <summary>
+    /// Update district
+    /// </summary>
+    /// <param name="districtId">district id</param>
+    /// <param name="district">Update district request body</param>
+    /// <returns></returns>
     [HttpPut("{districtId}", Name = "UpdateDistrict")]
+    [ProducesResponseType( StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult UpdateDistrict(int districtId, UpdateDistrict district)
     {
         if (districtId != district.DistrictId)
@@ -80,7 +102,14 @@ public class DistrictController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Delete district
+    /// </summary>
+    /// <param name="districtId">district id</param>
+    /// <returns></returns>
     [HttpDelete("{districtId}", Name = "DeleteDistrict")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult DeleteDistrict(int districtId)
     {
         if (!_districtRepository.DistrictExists(districtId))
@@ -91,6 +120,14 @@ public class DistrictController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Available sales persons 
+    /// </summary>
+    /// <remarks>
+    /// Get a list of available sales persons for the specific district
+    /// </remarks>
+    /// <param name="districtId">district id</param>
+    /// <returns></returns>
     [HttpGet("{districtId}/AvailableSalesPersons", Name = "GetAvailableSalesPersonsForDistrict")]
     [ProducesResponseType(typeof(IEnumerable<SalesPerson>), StatusCodes.Status200OK)]
     public ActionResult GetAvailableSalesPersonsForDistrict(int districtId)

@@ -7,7 +7,7 @@
     <UserSecretsId>e41c2827-21c9-4a9e-8cd9-b75e6072fe31</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	  <RootNamespace>WebapiSales</RootNamespace>
-
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
