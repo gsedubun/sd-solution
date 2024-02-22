@@ -59,13 +59,16 @@ public class DistrictController : ControllerBase
     [ProducesResponseType(typeof(District), StatusCodes.Status201Created)]
     public ActionResult<District> AddDistrict(AddDistrict district)
     {
+        _logger.LogDebug("AddDistrict calling");
             var districtModel = new District()
             {
                 DistrictName = district.DistrictName,
                 PrimarySalesId = district.PrimarySalesId
             };
             _districtRepository.AddDistrict(districtModel);
-            return CreatedAtRoute("GetDistrict", new { districtId = districtModel.DistrictId }, districtModel);
+            _logger.LogDebug("AddDistrict called");
+
+        return CreatedAtRoute("GetDistrict", new { districtId = districtModel.DistrictId }, districtModel);
        
         
     }

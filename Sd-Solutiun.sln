@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webapi-sales", "webapi-sales\webapi-sales.csproj", "{069E3A3C-445F-40C2-B70E-46DF165D4B79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sd-Solution.Tests", "Sd-Solution.Tests\Sd-Solution.Tests.csproj", "{3DF6DB7E-E1D7-4FA0-84C2-B91D0A7EF585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sd-Solution.Tests", "Sd-Solution.Tests\Sd-Solution.Tests.csproj", "{3DF6DB7E-E1D7-4FA0-84C2-B91D0A7EF585}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sd-DbMigrator", "Sd-DbUp\Sd-DbMigrator.csproj", "{DA6E9DD1-A80E-4C32-B06D-F20E20EEE54B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3DF6DB7E-E1D7-4FA0-84C2-B91D0A7EF585}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DF6DB7E-E1D7-4FA0-84C2-B91D0A7EF585}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DF6DB7E-E1D7-4FA0-84C2-B91D0A7EF585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA6E9DD1-A80E-4C32-B06D-F20E20EEE54B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA6E9DD1-A80E-4C32-B06D-F20E20EEE54B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA6E9DD1-A80E-4C32-B06D-F20E20EEE54B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA6E9DD1-A80E-4C32-B06D-F20E20EEE54B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

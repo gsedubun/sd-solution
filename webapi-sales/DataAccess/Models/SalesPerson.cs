@@ -1,4 +1,6 @@
-﻿namespace WebapiSales.DataAccess.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebapiSales.DataAccess.Models
 {
     public class SalesPerson
     {

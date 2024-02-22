@@ -73,6 +73,8 @@ public class StoreController: ControllerBase{
 
     [HttpPut("{storeId}", Name = "UpdateStore")]
     [ProducesResponseType(typeof(Store), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdateStore(int storeId, UpdateStore store)
     {
         if (storeId != store.StoreId)
